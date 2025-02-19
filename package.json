@@ -1,0 +1,20 @@
+{
+  "name": "open-music-app-back-end",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Kurniawan Saputra",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  },
+  "dependencies": {
+    "@hapi/hapi": "^21.3.12",
+    "joi": "^17.13.3",
+    "nanoid": "^3.1.20",
+    "pg": "^8.13.3"
+  }
+}
