@@ -6,7 +6,7 @@ const NotFoundError = require("../../exceptions/NotFoundError");
 
 class SongsService {
   constructor() {
-    this._pool = new Pool();
+    this.pool = new Pool();
   }
 
   async addSong({
@@ -37,9 +37,9 @@ class SongsService {
       ],
     };
 
-    const result = await this._pool.query(query);
+    const result = await this.pool.query(query);
 
-    if (!result.rows[0]?.id) {
+    if (!result.rows[0].id) {
       throw new InvariantError("Song failed to add");
     }
 
@@ -62,10 +62,10 @@ class SongsService {
     }
 
     if (conditions.length > 0) {
-      query += " WHERE " + conditions.join(" AND ");
+      query += ` WHERE ${conditions.join(" AND ")}`;
     }
 
-    const result = await this._pool.query({ text: query, values });
+    const result = await this.pool.query({ text: query, values });
     return result.rows.map(mapDBToSongListModel);
   }
 
@@ -75,7 +75,7 @@ class SongsService {
       values: [id],
     };
 
-    const result = await this._pool.query(query);
+    const result = await this.pool.query(query);
 
     if (!result.rows.length) {
       throw new NotFoundError("Song not found");
@@ -86,7 +86,9 @@ class SongsService {
 
   async editSongById(
     id,
-    { title, year, performer, genre, duration = null, albumId = null }
+    {
+      title, year, performer, genre, duration = null, albumId = null,
+    },
   ) {
     const updatedAt = new Date().toISOString();
     const query = {
@@ -96,7 +98,7 @@ class SongsService {
       values: [title, year, performer, genre, duration, albumId, updatedAt, id],
     };
 
-    const result = await this._pool.query(query);
+    const result = await this.pool.query(query);
 
     if (!result.rows.length) {
       throw new NotFoundError("Song not found");
@@ -111,7 +113,7 @@ class SongsService {
       values: [id],
     };
 
-    const result = await this._pool.query(query);
+    const result = await this.pool.query(query);
 
     if (!result.rows.length) {
       throw new NotFoundError("Song not found");
