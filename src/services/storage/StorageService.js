@@ -1,4 +1,6 @@
 const fs = require("fs");
+const crypto = require("crypto");
+const mime = require("mime-types");
 
 class StorageService {
   constructor(folder) {
@@ -9,7 +11,9 @@ class StorageService {
   }
 
   writeFile(file, meta) {
-    const filename = +new Date() + meta.filename;
+    const ext = mime.extension(meta.headers["content-type"]);
+    const randomName = crypto.randomUUID();
+    const filename = `${randomName}.${ext}`;
     const path = `${this.folder}/${filename}`;
 
     const fileStream = fs.createWriteStream(path);

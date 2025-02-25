@@ -85,6 +85,19 @@ class AlbumsService {
       throw new NotFoundError("Album not found");
     }
   }
+
+  async updateAlbumCover(id, coverUrl) {
+    const query = {
+      text: "UPDATE albums SET cover_url = $1 WHERE id = $2 RETURNING id",
+      values: [coverUrl, id],
+    };
+
+    const result = await this.pool.query(query);
+
+    if (!result.rows.length) {
+      throw new NotFoundError("Album not found");
+    }
+  }
 }
 
 module.exports = AlbumsService;
